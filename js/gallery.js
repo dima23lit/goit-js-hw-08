@@ -79,10 +79,6 @@ function getProduct(evt) {
     instance.show()
 }
 
-console.log(images)
-
-
-
 function createMarkup(arr) {
   return arr.map(({preview, original, description}) => 
     `<li class="gallery-item">
