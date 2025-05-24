@@ -70,13 +70,14 @@ const makeGallery = images.map(({ preview, original, description }) =>
     `<li class="gallery-item">
        <a class="gallery-link" href="${original}">
         <img
+        data-source="${original}"
         class="gallery-image"
         src="${preview}"
-        data-source="${original}"
         alt="${description}"/>
       </a>
     </li>`
 ).join("")
+
 
 gallery.insertAdjacentHTML("beforeend", makeGallery)
 
@@ -85,9 +86,16 @@ gallery.addEventListener('click', modal);
 function modal(event) {
   event.preventDefault();
 
-  if (event.target === event.currentTarget) {
-    return;
+  if (event.target.dataset.source === null) {
+    event.target.dataset.source = event.target.closest(".gallery-item").children[0].href;
   }
+
+  if (!(event.target.dataset.source)) {
+    return
+  }
+
+  console.log(event)
+  console.log(event.target)
 
   const instance = basicLightbox.create(`
     <img src="${event.target.dataset.source}" width="1112" height="640">
